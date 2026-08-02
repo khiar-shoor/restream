@@ -8,7 +8,7 @@ This guide walks you through setting up a lightweight Docker RTMP restream bridg
 
 First, you need to set up the foundational project in your Runflare account.
 
-1. **Login or Register** to your Runflare account.
+1. **Login or Register** to your [Runflare account](https://portal.runflare.com/).
 2. Click on **Create Project (ایجاد پروژه)**.
 3. Select any domain name you prefer.
 4. **Select a Datacenter**: For the best unthrottled connection from inside the country, it is highly recommended to select an Iranian datacenter. Choose **Pishgaman IRAN (پیشگامان ایران)**.
