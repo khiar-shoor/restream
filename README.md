@@ -57,9 +57,17 @@ To keep your stream keys secure, we use Environment Variables. The bridge will r
 
 1. Look for the **Environment Variables (متغیرهای محیطی)** section in the right-side pane of your deployed app.
 2. Add the following variables:
-   * **`TWITCH_KEY`**: Your Twitch Stream Key (e.g., `live_...`)
-   * **`KICK_KEY`**: Your Kick Stream Key (e.g., `key_...`)
-   * **`PLATFORMS`**: A comma-separated list of the platforms you wish to stream to (e.g., `kick, twitch`, `Twitch`, or `KICK`). If left completely blank, the script defaults to streaming to both.
+   * **`TWITCH_KEY`**: Your secret Twitch stream key (found in your Twitch Creator Dashboard).
+   * **`KICK_KEY`**: Your secret Kick stream key (found in your Kick Creator Dashboard).
+   * **`PLATFORMS`**: Controls which platforms you are broadcasting to.
+     * Set this to **`twitch, kick`** to stream to both.
+     * Set it to **`twitch`** or **`kick`** to stream to just one.
+     * (If left empty, it defaults to both).
+   * **`OBS_STREAM_KEY`** *(Optional but Recommended)*: This acts as a password to secure your custom server so random people cannot stream to your channels.
+     * Type a secure password here (e.g., **`MySecretPassword123`**). Avoid spaces or special characters.
+     * If you leave this blank, your server will be "open" and accept a stream from anyone who knows your port number.
+
+Make sure to save your environment variables and let the container restart to apply the changes.
 
 *Note: You do not need to manually restart any containers. Whenever you update or change an environment variable (like switching platforms), Runflare automatically restarts the container. Just wait a few moments for the new deployment to finish before starting your stream in OBS.*
 
@@ -89,11 +97,13 @@ You must bypass the web proxy by using a **NodePort** connection.
 
 Now that your server is running and your direct NodePort is open, configure OBS to send your single stream to the bridge.
 
-1. Open OBS Studio and go to **File > Settings > Stream**.
+1. Open **OBS Studio** and go to **Settings > Stream**.
 2. **Service**: Select **Custom**.
-3. **Server**: Enter `rtmp://[YOUR_NODEPORT_ADDRESS_AND_PORT]/live`
-   * *Example:* `rtmp://remote-pishgaman.runflare.com:30769/live`
-4. **Stream Key**: Enter `test` (or leave it blank). Authentication is handled internally by the server.
+3. **Server**: Enter your Runflare NodePort address followed by **`/live`**.
+   * *Example:* `rtmp://remote-pishgaman.runflare.com:30769/live` (Make sure to replace 30769 with your actual 5-digit port).
+4. **Stream Key**:
+   * If you set an **`OBS_STREAM_KEY`** in your Runflare environment variables, enter that exact password here.
+   * If you left it blank in Runflare, you can type anything here (like `test`) or leave it blank—it won't matter.
 5. Click **Apply**, then hit **Start Streaming**.
 
 Your stream will now hit your custom Nginx server and automatically branch out to your selected platforms!
