@@ -1,4 +1,4 @@
-# RTMP Restream Bridge for Restricted Networks (Twitch & Kick)
+# RTMP Restream Bridge for Restricted Networks (Twitch & Kick & YouTube)
 
 This guide walks you through setting up a lightweight Docker RTMP restream bridge using Nginx and Stunnel on Runflare. It routes a single OBS stream to Twitch and Kick (RTMPS) with zero transcoding, bypassing strict national firewalls or Layer 7 web proxies by using direct TCP connections.
 
@@ -36,18 +36,21 @@ Now we need to deploy the actual bridge code to the service you just created. Th
 
 Go to the **New Deployment (استقرار جدید)** section. You can deploy using either of these two methods:
 
-### Option A: Direct GitHub Link (Recommended)
+### Option A: ZIP Upload (Recommended)
+1. Download the project as a `.zip` file from the GitHub repository.
+2. Drag and drop, or upload the ZIP file directly into the deployment area.
+3. Start the deployment.
+
+### Option A: Direct GitHub Link
 1. Select **Git**.
 2. Choose **Classic GitHub (گیت هاب کلاسیک)**.
 3. Enter the repository URL: `https://github.com/khiar-shoor/restream.git`
 4. Set the **Branch** to `main`.
 5. Leave the Token field completely blank.
-6. Start the deployment.
+6. Select the last commit from the bottom of the page.
+7. Start the deployment.
 
-### Option B: ZIP Upload
-1. Download the project as a `.zip` file from the GitHub repository.
-2. Drag and drop, or upload the ZIP file directly into the deployment area.
-3. Start the deployment.
+
 
 ---
 
@@ -59,10 +62,11 @@ To keep your stream keys secure, we use Environment Variables. The bridge will r
 2. Add the following variables:
    * **`TWITCH_KEY`**: Your secret Twitch stream key (found in your Twitch Creator Dashboard).
    * **`KICK_KEY`**: Your secret Kick stream key (found in your Kick Creator Dashboard).
+   * **`YOUTUBE_KEY`**: Your secret YouTube stream key (found in your YouTube Live Control Room).
    * **`PLATFORMS`**: Controls which platforms you are broadcasting to.
-     * Set this to **`twitch, kick`** to stream to both.
-     * Set it to **`twitch`** or **`kick`** to stream to just one.
-     * (If left empty, it defaults to both).
+     * Set this to **`twitch, kick, youtube`** to stream to all three.
+     * Set it to any combination like **`youtube, kick`** to stream to specific ones.
+     * (If left empty, it defaults to all three).
    * **`OBS_STREAM_KEY`** *(Optional but Recommended)*: This acts as a password to secure your custom server so random people cannot stream to your channels.
      * Type a secure password here (e.g., **`MySecretPassword123`**). Avoid spaces or special characters.
      * If you leave this blank, your server will be "open" and accept a stream from anyone who knows your port number.

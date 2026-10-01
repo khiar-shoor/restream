@@ -1,11 +1,12 @@
 #!/bin/sh
 
 if [ -z "$PLATFORMS" ]; then
-    PLATFORMS="twitch, kick"
+    PLATFORMS="twitch, kick, youtube"
 fi
 
 export PUSH_TWITCH=""
 export PUSH_KICK=""
+export PUSH_YOUTUBE=""
 START_STUNNEL=0
 
 # Check for Twitch
@@ -19,6 +20,11 @@ if echo "$PLATFORMS" | grep -iq "kick"; then
     START_STUNNEL=1
 fi
 
+# Check for YouTube
+if echo "$PLATFORMS" | grep -iq "youtube"; then
+    export PUSH_YOUTUBE="push rtmp://a.rtmp.youtube.com/live2/${YOUTUBE_KEY};"
+fi
+
 # Password Authentication Check (Optional)
 if [ -n "$OBS_STREAM_KEY" ]; then
     # Password set in Runflare: Enforce exact match
@@ -29,7 +35,7 @@ else
 fi
 
 # Inject variables into nginx.conf
-envsubst '$PUSH_TWITCH $PUSH_KICK $AUTH_CHECK' < /etc/nginx/nginx.conf > /etc/nginx/nginx.conf.tmp
+envsubst '$PUSH_TWITCH $PUSH_KICK $PUSH_YOUTUBE $AUTH_CHECK' < /etc/nginx/nginx.conf > /etc/nginx/nginx.conf.tmp
 mv /etc/nginx/nginx.conf.tmp /etc/nginx/nginx.conf
 
 # Start Stunnel if Kick is enabled
