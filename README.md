@@ -1,4 +1,4 @@
-# RTMP Restream Bridge for Restricted Networks (Twitch & Kick)
+# RTMP Restream Bridge for Restricted Networks (Twitch & Kick & YouTube)
 
 This guide walks you through setting up a lightweight Docker RTMP restream bridge using Nginx and Stunnel on Runflare. It routes a single OBS stream to Twitch and Kick (RTMPS) with zero transcoding, bypassing strict national firewalls or Layer 7 web proxies by using direct TCP connections.
 
@@ -36,18 +36,21 @@ Now we need to deploy the actual bridge code to the service you just created. Th
 
 Go to the **New Deployment (استقرار جدید)** section. You can deploy using either of these two methods:
 
-### Option A: Direct GitHub Link (Recommended)
+### Option A: ZIP Upload (Recommended)
+1. Download the project as a `.zip` file from the GitHub repository.
+2. Drag and drop, or upload the ZIP file directly into the deployment area.
+3. Start the deployment.
+
+### Option A: Direct GitHub Link
 1. Select **Git**.
 2. Choose **Classic GitHub (گیت هاب کلاسیک)**.
 3. Enter the repository URL: `https://github.com/khiar-shoor/restream.git`
 4. Set the **Branch** to `main`.
 5. Leave the Token field completely blank.
-6. Start the deployment.
+6. Select the last commit from the bottom of the page.
+7. Start the deployment.
 
-### Option B: ZIP Upload
-1. Download the project as a `.zip` file from the GitHub repository.
-2. Drag and drop, or upload the ZIP file directly into the deployment area.
-3. Start the deployment.
+
 
 ---
 
